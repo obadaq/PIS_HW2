@@ -15,7 +15,7 @@ class Date:
             leap = True
         else:
             leap = False
-            return leap
+        return leap
 
     def valid(self):
         if (1 <= self.month <= 12 and
@@ -47,6 +47,15 @@ class Date:
 
     def __add__(self, other):
         self.day = self.day + other
+        if self.month in self.months31:
+            while self.day > 31:
+                self.month += 1
+                self.day -= 31
+        if self.month in self.months30:
+            while self.day > 30:
+                self.month += 1
+                self.day -= 30
+
         return print(self)
 
     def __str__(self):
@@ -54,8 +63,14 @@ class Date:
 
     def __sub__(self, other):
         year_count = 0
-        for year in range(self.year, other.year+1):
-            if year.leap():
+        print(list(range(self.year, other.year+1)))
+
+        for year in range(self.year, other.year):
+            if self.year == other.year:
+                continue
+            if ((year % 400 == 0) or
+                (year % 100 != 0) and
+                    (year % 4 == 0)):
                 year_count += 366
             else:
                 year_count += 365
@@ -63,7 +78,8 @@ class Date:
         return abs(self.order() - other.order()) + year_count
 
 
-d1 = Date(10, 5, 2024)
-d2 = Date(11, 5, 2023)
+d1 = Date(1, 12, 2022)
+d2 = Date(1, 10, 2022)
 
-print(d1-d2)
+print(d2+ 31)
+print(d2)
