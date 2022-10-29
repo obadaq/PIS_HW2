@@ -1,3 +1,4 @@
-day , month , year = input('enter date ').split('-')
+from main import Date
 
-print(day," -",month,year)
+d1 = Date(29, 12, 2024)
+

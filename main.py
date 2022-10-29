@@ -7,6 +7,10 @@ class Date:
         self.day = day
         self.month = month
         self.year = year
+        if self.valid():
+            print('This Date is Valid')
+        else:
+            print('This Date is NOT VALID')
 
     def leap(self):
         if ((self.year % 400 == 0) or
@@ -19,15 +23,14 @@ class Date:
 
     def valid(self):
         if (1 <= self.month <= 12 and
-            1 <= self.day <= 31 and (self.month in self.months31) or
-            1 <= self.day <= 30 and (self.month in self.months30) or
-                self.leap() and 1 <= self.day <= 29 or
-                (not self.leap()) and 1 <= self.day <= 28):
+                ((1 <= self.day <= 31 and (self.month in self.months31)) or
+                 (1 <= self.day <= 30 and (self.month in self.months30)) or
+                 (self.leap() and 1 <= self.day <= 29) or
+                 (not self.leap()) and 1 <= self.day <= 28)):
 
             valid = True
         else:
             valid = False
-            print('The Date you Entered is not VALID')
         return valid
 
     def order(self):
@@ -47,14 +50,27 @@ class Date:
 
     def __add__(self, other):
         self.day = self.day + other
-        if self.month in self.months31:
-            while self.day > 31:
-                self.month += 1
-                self.day -= 31
-        if self.month in self.months30:
-            while self.day > 30:
-                self.month += 1
-                self.day -= 30
+
+        while not self.valid():
+            if self.month in self.months31:
+                if self.day > 31:
+                    self.month += 1
+                    self.day -= 31
+            elif self.month in self.months30:
+                if self.day > 30:
+                    self.month += 1
+                    self.day -= 30
+            elif self.leap() and self.month == 2:
+                if self.day > 29:
+                    self.month += 1
+                    self.day -= 29
+            elif not self.leap() and self.month == 2:
+                if self.day > 28:
+                    self.month += 1
+                    self.day -= 28
+            if self.month > 12:
+                self.year += 1
+                self.month = 1
 
         return print(self)
 
@@ -77,9 +93,21 @@ class Date:
 
         return abs(self.order() - other.order()) + year_count
 
+    def __lt__(self, other):
+        return self.order() < other
 
-d1 = Date(1, 12, 2022)
-d2 = Date(1, 10, 2022)
+    def __gt__(self, other):
+        return self.order() > other
 
-print(d2+ 31)
-print(d2)
+    def __le__(self, other):
+        return self.order() <= other
+
+    def __ge__(self, other):
+        return self.order() >= other
+
+    def __eq__(self, other):
+        return self.order() == other
+
+    def __ne__(self, other):
+        return self.order() != other
+
