@@ -63,7 +63,6 @@ class Date:
         return abs(self.order() - other.order()) + year_count
 
 
-
 d1 = Date(10, 5, 2024)
 d2 = Date(11, 5, 2023)
 
