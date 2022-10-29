@@ -1,52 +1,70 @@
-class myDate:
+class Date:
     
-    def __init__(self,day,month,year) :
+    def __init__(self, day, month, year):
+
+        self.months31 = [1, 3, 5, 7, 8, 10, 12]
+        self.months30 = [4, 6, 9, 11]
         self.day = day
         self.month = month
         self.year = year
-        
-        
-    def valid_date(self) :
-        months31= [1,3,5,7,8,10,12]
-        months30= [4,6,9,11]
-        if((self.year % 400 == 0) or 
-           (self.year % 100 != 0) and
-           (self.year % 4 == 0)):   
-            leap = True  
-        else:  
-            leap = False 
 
-        if ((1<=self.day<=31 and (self.month in months31)) or
-            (1<=self.day<=30 and (self.month in months30)) or
-            (leap and 1<=self.day<=29) or 
-            ((not leap) and 1<=self.day<=28)):
-                return True
+    def leap(self):
+        if ((self.year % 400 == 0) or
+                (self.year % 100 != 0) and
+                (self.year % 4 == 0)):
+            leap = True
         else:
-                return False
+            leap = False
+            return leap
 
+    def valid(self):
+        if (1 <= self.month <= 12 and
+            1 <= self.day <= 31 and (self.month in self.months31) or
+            1 <= self.day <= 30 and (self.month in self.months30) or
+                self.leap() and 1 <= self.day <= 29 or
+                (not self.leap()) and 1 <= self.day <= 28):
 
-    def __add__(self,other):
+            valid = True
+        else:
+            valid = False
+            print('The Date you Entered is not VALID')
+        return valid
+
+    def order(self):
+        order = 0
+        if self.valid():
+            for month in range(1, self.month):
+                if month in self.months31:
+                    order += 31
+                elif month in self.months30:
+                    order += 30
+                elif self.leap:
+                    order += 29
+                else:
+                    order += 28
+            order += self.day
+        return order
+
+    def __add__(self, other):
         self.day = self.day + other
         return print(self)
 
+    def __str__(self):
+        return str(self.day) + '\\' + str(self.month) + '\\' + str(self. year)
 
-    def __str__ (self) :
-        return str(self.day) +'\\' + str(self.month) + '\\'+str(self. year)
+    def __sub__(self, other):
+        year_count = 0
+        for year in range(self.year, other.year+1):
+            if year.leap():
+                year_count += 366
+            else:
+                year_count += 365
 
-d1 = myDate(10,12,2022)
-d2 = myDate(20,12,2022)
-d3 = d1+10
+        return abs(self.order() - other.order()) + year_count
 
-#print(d3)
 
-'''
-    def CheckLeap(Year):  
-  # Checking if the given year is leap year  
-        if((Year % 400 == 0) or 
-           (Year % 100 != 0) and
-           (Year % 4 == 0)):   
-            print("Given Year is a leap Year");  
-  # Else it is not a leap year  
-        else:  
-             print ("Given Year is not a leap Year")  
-'''
+
+d1 = Date(10, 5, 2024)
+d2 = Date(11, 5, 2023)
+
+print(d1-d2)
