@@ -79,9 +79,13 @@ class Date:
 
     def __sub__(self, other):
         year_count = 0
-        print(list(range(self.year, other.year+1)))
+        
+        if self.year < other.year:
+            rang = range(self.year, other.year)
+        elif self.year > other.year:
+            rang = range(other.year, self.year)
 
-        for year in range(self.year, other.year):
+        for year in rang:
             if self.year == other.year:
                 continue
             if ((year % 400 == 0) or
