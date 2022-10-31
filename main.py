@@ -12,6 +12,24 @@ class Date:
         else:
             print('This Date is NOT VALID')
 
+    def get_day(self):
+        return self.day
+
+    def set_day(self, day):
+        self.day = day
+
+    def get_month(self):
+        return self.month
+
+    def set_month(self, month):
+        self.month = month
+
+    def get_year(self):
+        return self.year
+
+    def set_year(self, year):
+        self.year = year
+
     def leap(self):
         if ((self.year % 400 == 0) or
                 (self.year % 100 != 0) and
@@ -115,3 +133,6 @@ class Date:
     def __ne__(self, other):
         return self.order() != other
 
+
+d1 = Date(10, 2, 2022)
+print()
