@@ -1,9 +1,9 @@
-from Date import Date
+from test import Date
 print(" This Code is a test code for newly defined CLASS Named 'Date' >>>")
 
 dd, mm, yyyy = input('Enter a date in this form - dd,mm,yyyy   >>:  ').split(',')
 d1 = Date(int(dd), int(mm), int(yyyy))
-
+d2 = Date(1,1,2000)
 if d1.valid():
     print('The Day you Entered is >>:  ', d1)
     print('The order of the day in the year is  >>:  ', d1.order())
@@ -14,6 +14,8 @@ if d1.valid():
 
     add = int(input('Enter a number to add to the Date you Entered  >>:  '))
     d2 = d1 + add
+    print(d2)
+    print(d1)
     print ('This Date >>:  ', d2, '  >>:is after the date you Entered by',add)
     dd, mm, yyyy = input('Enter First Date in this form - dd,mm,yyyy   >>:  ').split(',')
     d3 = Date(int(dd), int(mm), int(yyyy))
