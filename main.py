@@ -1,7 +1,6 @@
 class Date:
     
     def __init__(self, day, month, year):
-
         self.months31 = [1, 3, 5, 7, 8, 10, 12]
         self.months30 = [4, 6, 9, 11]
         self.day = day
@@ -11,6 +10,7 @@ class Date:
             print('This Date is Valid')
         else:
             print('This Date is NOT VALID')
+
 
     def get_day(self):
         return self.day
@@ -90,7 +90,7 @@ class Date:
                 self.year += 1
                 self.month = 1
 
-        return print(self)
+        return self
 
     def __str__(self):
         return str(self.day) + '\\' + str(self.month) + '\\' + str(self. year)
@@ -132,7 +132,3 @@ class Date:
 
     def __ne__(self, other):
         return self.order() != other
-
-
-d1 = Date(10, 2, 2022)
-print()
