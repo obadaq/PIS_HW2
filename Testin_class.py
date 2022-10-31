@@ -1,4 +1,4 @@
-from main import Date
+from Date import Date
 print(" This Code is a test code for newly defined CLASS Named 'Date' >>>")
 
 dd, mm, yyyy = input('Enter a date in this form - dd,mm,yyyy   >>:  ').split(',')
