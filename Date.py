@@ -6,11 +6,6 @@ class Date:
         self.day = day
         self.month = month
         self.year = year
-        if self.valid():
-            print('This Date is Valid')
-        else:
-            print('This Date is NOT VALID')
-
 
     def get_day(self):
         return self.day
@@ -67,30 +62,33 @@ class Date:
         return order
 
     def __add__(self, other):
-        self.day = self.day + other
+        day = self.day + other
+        month = self.month
+        year = self.year
+        new_date= Date(day,month,year)
+        
+        while not new_date.valid():
+            if new_date.month in self.months31 and new_date.day > 31 :
+                new_date.month += 1
+                new_date.day -= 31
 
-        while not self.valid():
-            if self.month in self.months31:
-                if self.day > 31:
-                    self.month += 1
-                    self.day -= 31
-            elif self.month in self.months30:
-                if self.day > 30:
-                    self.month += 1
-                    self.day -= 30
-            elif self.leap() and self.month == 2:
-                if self.day > 29:
-                    self.month += 1
-                    self.day -= 29
-            elif not self.leap() and self.month == 2:
-                if self.day > 28:
-                    self.month += 1
-                    self.day -= 28
-            if self.month > 12:
-                self.year += 1
-                self.month = 1
+            elif new_date.month in self.months30 and new_date.day > 30:
+                new_date.month += 1
+                new_date.day -= 30
 
-        return self
+            elif new_date.leap() and new_date.month == 2 and new_date.day > 29:
+                new_date.month += 1
+                new_date.day -= 29
+
+            elif not new_date.leap() and new_date.month == 2 and new_date.day > 28:
+                new_date.month += 1
+                new_date.day -= 28
+
+            if new_date.month > 12:
+                new_date.year += 1
+                new_date.month = 1
+        
+        return new_date
 
     def __str__(self):
         return str(self.day) + '\\' + str(self.month) + '\\' + str(self. year)

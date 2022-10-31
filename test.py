@@ -67,12 +67,11 @@ class Date:
         return order
 
     def __add__(self, other):
-        #day = self.day + other
-        #month = self.month
-        #year = self.year
+        day = self.day + other
+        month = self.month
+        year = self.year
+        new_date= Date(day,month,year)
         
-        new_date = self
-
         while not new_date.valid():
             if new_date.month in self.months31 and new_date.day > 31 :
                 new_date.month += 1
@@ -81,12 +80,15 @@ class Date:
             elif new_date.month in self.months30 and new_date.day > 30:
                 new_date.month += 1
                 new_date.day -= 30
+
             elif new_date.leap() and new_date.month == 2 and new_date.day > 29:
                 new_date.month += 1
                 new_date.day -= 29
+
             elif not new_date.leap() and new_date.month == 2 and new_date.day > 28:
                 new_date.month += 1
                 new_date.day -= 28
+
             if new_date.month > 12:
                 new_date.year += 1
                 new_date.month = 1
